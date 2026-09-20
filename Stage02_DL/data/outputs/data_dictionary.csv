@@ -1,0 +1,54 @@
+column_name,data_type,description,unit,allowed_values,missing_value_meaning
+image_id,string,Unique identifier assigned to each histopathology patch image,none,histo_00001 to histo_02500,Not allowed; required primary key
+image_path,string,Relative file path to the stored 50x50 RGB PNG image file,none,histopathology/images/histo_*.png,Not allowed; file must exist
+label,integer,Binary diagnostic classification target for cancer presence,category code,"0, 1",Not allowed; fully annotated
+class,string,Pathological IDC status: non_idc_or_benign (0) vs invasive_ductal_carcinoma (1),categorical,"non_idc_or_benign, invasive_ductal_carcinoma",Not allowed
+source,string,Original dataset provenance and landmark citation reference,none,Breast Histopathology Images (IDC Benchmark / Cruz-Roa et al.),Not allowed
+magnification,string,Optical magnification level of the whole slide scan source,optical power,40x,Not allowed
+width,integer,Image width in pixels,pixels,50,Not allowed
+height,integer,Image height in pixels,pixels,50,Not allowed
+channels,integer,Number of color channels in image,channels,3,Not allowed
+split,string,Machine learning dataset partition assignment,partition,"train, val, test",Not allowed
+md5_hash,string,MD5 cryptographic checksum of raw image bytes for deduplication and integrity,hex string,32-character hexadecimal string,Not allowed
+patient_id,string,De-identified patient identifier corresponding to TCIA NSCLC cohort,none,LUNG1-001 through LUNG1-007,Not allowed; primary subject identifier
+study_id,string,Imaging examination study identifier,none,study_LUNG1-*,Not allowed
+series_id,string,CT volumetric acquisition series identifier,none,ct_axial_LUNG1-*,Not allowed
+image_id,string,Unique identifier for specific CT axial slice,none,LUNG1-*_slice_***,Not allowed
+slice_id,integer,Zero-indexed axial slice index along inferior-to-superior z-axis,index,0 to max_slice_index,Not allowed
+timepoint,string,Clinical acquisition temporal stage,categorical,baseline_pretreatment,Not allowed
+image_path,string,Relative path to windowed 8-bit grayscale PNG CT slice,none,radiology/images/LUNG1-*_slice_*.png,Not allowed; file must exist
+mask_path,string,Relative path to binary expert GTV-1 tumor segmentation mask PNG,none,radiology/masks/LUNG1-*_slice_*_mask.png,Not allowed; file must exist
+tumor_present,integer,Binary indicator whether tumor delineation is present on this 2D slice,boolean indicator,"0, 1",Not allowed
+tumor_area,float,Cross-sectional area of gross tumor volume on this 2D slice,mm^2,>= 0.0,0.0 indicates no tumor visible on slice
+tumor_volume,float,Total 3D gross tumor volume (GTV-1) across the entire patient CT scan,cm^3 (mL),> 0.0,Not allowed
+tumor_volume_mm3,float,Total 3D gross tumor volume (GTV-1) calculated in cubic millimeters,mm^3,> 0.0,Not allowed
+response,string,Baseline clinical response context summarizing clinical stage and tumor histology,text,Overall Stage: *; Histology: *,Not allowed
+overall_stage,string,AJCC TNM overall stage group of the primary tumor,stage,"I, II, IIIa, IIIb",Clinical stage missing/unrecorded
+histology,string,Histopathological cellular subtype of the primary lung tumor,categorical,"squamous cell carcinoma, adenocarcinoma, large cell, not otherwise specified",Unknown histology
+survival_time_days,integer,Overall survival follow-up duration from scan date to death or last contact,days,> 0,Loss to follow-up
+event_death,integer,Vital status event indicator at last follow-up,binary indicator,"0 (alive/censored), 1 (deceased)",Unknown status
+outcome_2yr_mortality,integer,Binary prognostic indicator of death within 2 years (730 days),binary indicator,"0 (survived >2yr), 1 (died <=2yr)",Follow-up under 2yr without event
+scan_date,string,Clinical scan acquisition date or baseline timing descriptor,ISO date / descriptor,YYYY-MM-DD or Pre-treatment,Unrecorded scan date
+width,integer,Image width in pixels,pixels,512,Not allowed
+height,integer,Image height in pixels,pixels,512,Not allowed
+pixel_spacing_mm,float,Physical in-plane voxel pixel spacing in millimeters,mm,> 0.0,Not allowed
+slice_thickness_mm,float,Axial scan slice thickness in millimeters along z-axis,mm,> 0.0,Not allowed
+patient_id,string,De-identified patient identifier in prospective INSPIRE trial,none,INS-*-***,Not allowed; primary subject identifier
+timepoint,string,Clinical trial follow-up milestone label based on weeks from therapy start,milestone label,week_*.*,Unscheduled visit
+date,string,Relative elapsed clinical trial schedule date from start of treatment,relative day descriptor,Baseline+*d,Exact elapsed day unrecorded
+days_from_baseline,integer,Elapsed days from first dose of treatment (negative indicates screening),days,integers (e.g. -7 to +700),Baseline relative date unrecorded
+weeks_from_baseline,float,Elapsed weeks from first dose of treatment,weeks,real numbers,Unrecorded timing
+biomarker_name,string,Standard assay description of measured circulating biomarker,none,ctDNA_mean_molecules_per_mL,Not allowed
+biomarker_value,float,Quantitative concentration of circulating tumor DNA detected in plasma,mutant molecules per mL,>= 0.0,Assay failed or insufficient DNA yield
+ctdna_value,float,Direct ctDNA mutant molecule concentration (synonym of biomarker_value),mutant molecules per mL,>= 0.0,Assay failed or insufficient DNA yield
+protein_marker,float,Baseline tissue protein biomarker expression percentage (PD-L1 MPS),percent (%),0.0 to 100.0,Tissue unavailable or untested for PD-L1
+protein_marker_name,string,Name of the protein biomarker assayed,none,PD-L1_MPS_BASELINE,No protein marker assayed
+vaf,float,Mean circulating tumor variant allele frequency percentage,percent (%),0.0 to 100.0,Zero variants detected or below limit of detection
+tumor_volume,float,Simultaneous anatomical tumor volume on scan,cm^3,None / empty,Not measured in liquid biopsy blood plasma assay; cross-modality anatomical volume supplied in radiology modality
+response,string,Best overall treatment response according to RECIST 1.1 clinical criteria,RECIST category,"CR (Complete Response), PR (Partial Response), SD (Stable Disease), PD (Progressive Disease), NE (Not Evaluable)",Response assessment not evaluable
+outcome,string,Long-term patient survival vital status at conclusion of trial follow-up,vital status,"DECEASED, LIVING, Unknown",Patient lost to follow-up
+os_months,float,Overall survival duration in months from trial registration,months,>= 0.0,Unrecorded duration
+cancer_type,string,Primary cancer type cohort abbreviation,abbreviation,"BRCA, HGSC, MEL, OPHSC, MCC, COADREAD, etc.",Unspecified cohort
+ctdna_detected,integer,Binary indicator whether ctDNA was detected above assay limit of detection,binary indicator,"0 (not detected), 1 (detected)",Assay failed
+vaf_change_percent,float,Percent change in mean variant allele frequency relative to baseline visit,percent (%),real numbers (e.g. -100.0 to +1000.0+),Baseline visit or zero baseline VAF preventing ratio calculation
+molec_change_percent,float,Percent change in mutant molecule count relative to baseline visit,percent (%),real numbers (e.g. -100.0 to +1000.0+),Baseline visit or zero baseline count preventing ratio calculation
