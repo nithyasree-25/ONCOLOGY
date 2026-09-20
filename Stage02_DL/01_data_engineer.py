@@ -3,13 +3,35 @@ import sys
 import pandas as pd
 from PIL import Image
 
-def validate():
+def get_dataset_dir():
+    # 1. Command-line argument if provided
+    if len(sys.argv) > 1 and os.path.isdir(sys.argv[1]):
+        return os.path.abspath(sys.argv[1])
+    # 2. Environment variable STAGE02_DATA_DIR
+    env_dir = os.environ.get('STAGE02_DATA_DIR')
+    if env_dir and os.path.isdir(env_dir):
+        return os.path.abspath(env_dir)
+    # 3. Standard fallback candidate paths
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        os.path.join(script_dir, 'Stage02_Data'),
+        os.path.abspath(os.path.join(script_dir, '..', '..', 'Stage02_Data')),
+        os.path.abspath(os.path.join(script_dir, '..', 'Stage02_Data'))
+    ]
+    for c in candidates:
+        if os.path.isdir(c):
+            return c
+    return env_dir if env_dir else os.path.join(script_dir, 'Stage02_Data')
+
+def validate(data_dir=None):
     print('============================================================')
     print('STARTING COMPREHENSIVE DATASET VALIDATION FOR STAGE 02')
     print('============================================================')
-    base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Stage02_Data')
+    base_dir = os.path.abspath(data_dir) if data_dir else get_dataset_dir()
+    print('Dataset Directory:', base_dir)
     if not os.path.exists(base_dir):
         print('ERROR: Base directory does not exist:', base_dir)
+        print('Hint: Set the STAGE02_DATA_DIR environment variable or pass the path as an argument.')
         return False
     errors = []
 
