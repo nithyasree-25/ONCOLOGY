@@ -1,0 +1,5 @@
+split,invasive_ductal_carcinoma,non_idc_or_benign,All
+test,112,263,375
+train,525,1225,1750
+val,113,262,375
+All,750,1750,2500

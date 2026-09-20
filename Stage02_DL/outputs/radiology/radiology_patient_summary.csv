@@ -1,0 +1,8 @@
+patient_id,total_slices,tumor_slices,tumor_volume_cm3,overall_stage,histology,survival_time_days,outcome_2yr_mortality,split,tumor_slice_ratio_pct
+LUNG1-001,134,21,156.323,IIIb,large cell,2165,0,train,15.671641791044777
+LUNG1-002,111,26,359.469,I,squamous cell carcinoma,155,1,train,23.423423423423422
+LUNG1-003,107,17,34.818,IIIb,large cell,256,1,train,15.887850467289718
+LUNG1-004,114,36,84.46,II,squamous cell carcinoma,141,1,train,31.57894736842105
+LUNG1-005,91,24,83.548,IIIb,squamous cell carcinoma,353,1,train,26.373626373626376
+LUNG1-006,114,23,78.342,IIIa,squamous cell carcinoma,173,1,val,20.175438596491226
+LUNG1-007,129,10,12.494,IIIa,squamous cell carcinoma,137,1,test,7.751937984496124
